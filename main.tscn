@@ -1,0 +1,183 @@
+[gd_scene load_steps=20 format=3 uid="uid://c5pvtsy4mgu03"]
+
+[ext_resource type="Texture2D" uid="uid://1fhbuhw5jvxu" path="res://magdaleneidle6-frame-ezgif.com-gif-to-sprite-converter.png" id="1_h2yge"]
+[ext_resource type="Texture2D" uid="uid://1es6x2mc1syb" path="res://magdaleneruninplace-ezgif.com-gif-to-sprite-converter.png" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://dkudskpshyu53" path="res://Illustration4.jpg" id="2_0xm2m"]
+
+[sub_resource type="GDScript" id="GDScript_ig7tw"]
+resource_name = "character"
+script/source = "extends CharacterBody2D
+
+@export var sprite: AnimatedSprite2D
+const SPEED = 500.0
+const JUMP_VELOCITY = -400.0
+
+
+
+func _physics_process(delta):
+	var direction = Input.get_vector(\"move_left\", \"move_right\", \"move_up\", \"move_down\")
+	if direction:
+		velocity = direction * SPEED
+		var x = sign(direction.x)
+		if x != 0 and sprite.flip_h != ( x < 0 ):
+			sprite.flip_h = not sprite.flip_h
+	else:
+		velocity = velocity.move_toward( Vector2.ZERO, delta*SPEED*10)
+	
+	if velocity:
+		sprite.play(\"walk\")
+		prints('velocity', velocity)
+		prints('position', position)
+		move_and_slide()
+	else:
+		sprite.play(\"idle\")
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kek77"]
+atlas = ExtResource("1_h2yge")
+region = Rect2(0, 0, 72, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4c57u"]
+atlas = ExtResource("1_h2yge")
+region = Rect2(72, 0, 72, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efxa6"]
+atlas = ExtResource("1_h2yge")
+region = Rect2(144, 0, 72, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
+atlas = ExtResource("1_h2yge")
+region = Rect2(216, 0, 72, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
+atlas = ExtResource("1_h2yge")
+region = Rect2(288, 0, 72, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w48qg"]
+atlas = ExtResource("1_h2yge")
+region = Rect2(360, 0, 72, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2yge"]
+atlas = ExtResource("1_ig7tw")
+region = Rect2(0, 0, 107, 186)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
+atlas = ExtResource("1_ig7tw")
+region = Rect2(107, 0, 107, 186)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lquwl"]
+atlas = ExtResource("1_ig7tw")
+region = Rect2(214, 0, 107, 186)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mycd"]
+atlas = ExtResource("1_ig7tw")
+region = Rect2(321, 0, 107, 186)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_272bh"]
+atlas = ExtResource("1_ig7tw")
+region = Rect2(428, 0, 107, 186)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vw27"]
+atlas = ExtResource("1_ig7tw")
+region = Rect2(535, 0, 107, 186)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kek77"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kek77")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4c57u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efxa6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg77c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycdy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w48qg")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2yge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bvp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lquwl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mycd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_272bh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vw27")
+}],
+"loop": false,
+"name": &"walk",
+"speed": 12.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_h2yge"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1bvp3"]
+gradient = SubResource("Gradient_h2yge")
+width = 1280
+height = 1280
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="Main" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite")]
+position = Vector2(157, 325)
+scale = Vector2(2, 2)
+motion_mode = 1
+script = SubResource("GDScript_ig7tw")
+sprite = NodePath("AnimatedSprite2D")
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+limit_smoothed = true
+position_smoothing_enabled = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+texture_filter = 1
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_kek77")
+animation = &"walk"
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="CharacterBody2D"]
+scale = Vector2(0.25, 0.25)
+color = Color(0.5, 1, 1, 1)
+energy = 0.5
+texture = SubResource("GradientTexture2D_1bvp3")
+
+[node name="bg" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_0xm2m")
+
+[node name="bg super big" type="Sprite2D" parent="."]
+z_index = -2
+scale = Vector2(6, 6)
+texture = ExtResource("2_0xm2m")
