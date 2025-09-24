@@ -153,8 +153,6 @@ sprite = NodePath("AnimatedSprite2D")
 metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-limit_smoothed = true
-position_smoothing_enabled = true
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
