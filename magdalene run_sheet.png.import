@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1es6x2mc1syb"
-path="res://.godot/imported/magdaleneruninplace-ezgif.com-gif-to-sprite-converter.png-cc44c1fa6df1ff0ad6f844bcf5cb7124.ctex"
+uid="uid://ci6sdstkdhuns"
+path="res://.godot/imported/magdalene run_sheet.png-3882cf991785a0b63b118075e1e137ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://magdaleneruninplace-ezgif.com-gif-to-sprite-converter.png"
-dest_files=["res://.godot/imported/magdaleneruninplace-ezgif.com-gif-to-sprite-converter.png-cc44c1fa6df1ff0ad6f844bcf5cb7124.ctex"]
+source_file="res://magdalene run_sheet.png"
+dest_files=["res://.godot/imported/magdalene run_sheet.png-3882cf991785a0b63b118075e1e137ff.ctex"]
 
 [params]
 
