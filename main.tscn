@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cg8sdk57bs330" path="res://magdalene idle_sheet.png" id="1_h2yge"]
 [ext_resource type="Texture2D" uid="uid://dkudskpshyu53" path="res://Illustration4.jpg" id="2_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://ci6sdstkdhuns" path="res://magdalene run_sheet.png" id="2_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://dlr44ihijoaqv" path="res://magdalene run_sheet.png" id="2_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://1hxf7eodlwl" path="res://magdalene_gun_hand.png" id="3_1bvp3"]
 
 [sub_resource type="GDScript" id="GDScript_ig7tw"]
@@ -10,6 +10,7 @@ resource_name = "character"
 script/source = "extends CharacterBody2D
 
 @export var sprite: AnimatedSprite2D
+@export var gun_hand: Sprite2D
 const SPEED = 500.0
 const JUMP_VELOCITY = -400.0
 
@@ -21,6 +22,9 @@ func _physics_process(delta):
 		var x = sign(direction.x)
 		if x != 0 and sprite.flip_h != ( x < 0 ):
 			sprite.flip_h = not sprite.flip_h
+			gun_hand.flip_h = not gun_hand.flip_h
+			gun_hand.offset *= Vector2(-1,1)
+			gun_hand.position *= Vector2(-1,1)
 	else:
 		velocity = velocity.move_toward( Vector2.ZERO, delta*SPEED*10)
 	
@@ -55,27 +59,27 @@ region = Rect2(256, 0, 64, 64)
 atlas = ExtResource("1_h2yge")
 region = Rect2(320, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_efxa6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
 atlas = ExtResource("2_1bvp3")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_efxa6"]
 atlas = ExtResource("2_1bvp3")
 region = Rect2(64, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
 atlas = ExtResource("2_1bvp3")
 region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w48qg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
 atlas = ExtResource("2_1bvp3")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vivmo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_w48qg"]
 atlas = ExtResource("2_1bvp3")
 region = Rect2(256, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2cqfq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vivmo"]
 atlas = ExtResource("2_1bvp3")
 region = Rect2(320, 0, 64, 64)
 
@@ -106,6 +110,9 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_1bvp3")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_efxa6")
 }, {
 "duration": 1.0,
@@ -119,9 +126,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vivmo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2cqfq")
 }],
 "loop": false,
 "name": &"walk",
@@ -205,18 +209,19 @@ func _process(_delta):
 
 [node name="Main" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite", "gun_hand")]
 position = Vector2(208, 236)
 motion_mode = 1
 script = SubResource("GDScript_ig7tw")
 sprite = NodePath("AnimatedSprite2D")
+gun_hand = NodePath("GunHand")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_kek77")
-animation = &"idle"
+animation = &"walk"
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
