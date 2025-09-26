@@ -1,136 +1,48 @@
-[gd_scene load_steps=32 format=3 uid="uid://c5pvtsy4mgu03"]
+[gd_scene load_steps=22 format=3 uid="uid://c5pvtsy4mgu03"]
 
-[ext_resource type="Texture2D" uid="uid://cg8sdk57bs330" path="res://magdalene_idle_sheet.png" id="1_h2yge"]
-[ext_resource type="Texture2D" uid="uid://dkudskpshyu53" path="res://Illustration4.jpg" id="2_0xm2m"]
-[ext_resource type="Texture2D" uid="uid://dlr44ihijoaqv" path="res://magdalene_run_sheet.png" id="2_1bvp3"]
-[ext_resource type="Texture2D" uid="uid://1hxf7eodlwl" path="res://magdalene_gun_hand.png" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://cryc12g6ehqgs" path="res://assets/magdalene_idle_no_hand_sheet.png" id="1_7mycd"]
+[ext_resource type="Texture2D" uid="uid://dxapfftkhuswl" path="res://assets/magdalene_idle_hand_only_sheet.png" id="2_272bh"]
+[ext_resource type="Texture2D" uid="uid://jv7nxhqdcyve" path="res://assets/magdalene_handgun.png" id="3_5vw27"]
+[ext_resource type="Texture2D" uid="uid://bg048b5nmd0v6" path="res://assets/magdalene_hand.png" id="4_kek77"]
+[ext_resource type="Texture2D" uid="uid://cy8dikb08ico8" path="res://assets/magdalene_run_hand_only_sheet.png" id="5_4c57u"]
+[ext_resource type="Texture2D" uid="uid://bwa515gfdl0c8" path="res://assets/magdalene_run_no_hand_sheet.png" id="6_efxa6"]
+[ext_resource type="Texture2D" uid="uid://bfhibxwiqkwnl" path="res://assets/Illustration4.jpg" id="7_272bh"]
 
 [sub_resource type="GDScript" id="GDScript_ig7tw"]
 resource_name = "character"
 script/source = "extends CharacterBody2D
 
-@export var sprite: AnimatedSprite2D
-@export var gun_hand: Sprite2D
+@export var anim_player: AnimationPlayer
+@export var sprites: Node2D
 const SPEED = 500.0
-const JUMP_VELOCITY = -400.0
 
 
 func _physics_process(delta):
 	var direction = Input.get_vector(\"move_left\", \"move_right\", \"move_up\", \"move_down\")
 	if direction:
 		velocity = direction * SPEED
-		var x = sign(direction.x)
-		if x != 0 and sprite.flip_h != ( x < 0 ):
-			sprite.flip_h = not sprite.flip_h
-			gun_hand.flip_h = not gun_hand.flip_h
-			gun_hand.offset *= Vector2(-1,1)
-			gun_hand.position *= Vector2(-1,1)
+		var x = Input.get_axis(\"move_left\",\"move_right\")
+		if x:
+			sprites.scale.x = x 
 	else:
 		velocity = velocity.move_toward( Vector2.ZERO, delta*SPEED*10)
 	
 	if velocity:
-		sprite.play(\"walk\")
+		anim_player.play(\"run\")
 		move_and_slide()
 	else:
-		sprite.play(\"idle\")
+		anim_player.play(\"idle\")
+
+
+#func update_flip():
+	#body_sprite.flip_h = flip_h
+	#gun_hand_aiming.flip_h = flip_h
+	#gun_hand_aiming.offset *= Vector2(-1,1)
+	#gun_hand_aiming.position *= Vector2(-1,1)
+	#gun_hand_animated.flip_h = flip_h
+	#gun_hand_animated.offset *= Vector2(-1,1)
+	#gun_hand_animated.position *= Vector2(-1,1)
 "
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lquwl"]
-atlas = ExtResource("1_h2yge")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7mycd"]
-atlas = ExtResource("1_h2yge")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_272bh"]
-atlas = ExtResource("1_h2yge")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5vw27"]
-atlas = ExtResource("1_h2yge")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kek77"]
-atlas = ExtResource("1_h2yge")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4c57u"]
-atlas = ExtResource("1_h2yge")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
-atlas = ExtResource("2_1bvp3")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_efxa6"]
-atlas = ExtResource("2_1bvp3")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
-atlas = ExtResource("2_1bvp3")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
-atlas = ExtResource("2_1bvp3")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w48qg"]
-atlas = ExtResource("2_1bvp3")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vivmo"]
-atlas = ExtResource("2_1bvp3")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kek77"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lquwl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7mycd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_272bh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5vw27")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kek77")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4c57u")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 4.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1bvp3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_efxa6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dg77c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ycdy4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_w48qg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vivmo")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 12.0
-}]
 
 [sub_resource type="Gradient" id="Gradient_1bvp3"]
 interpolation_mode = 2
@@ -141,18 +53,6 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_1bvp3")
 width = 2222
 height = 1666
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
-
-[sub_resource type="Gradient" id="Gradient_h2yge"]
-interpolation_mode = 2
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_1bvp3"]
-gradient = SubResource("Gradient_h2yge")
-width = 999
-height = 666
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
@@ -200,6 +100,7 @@ shader_parameter/outer_radius = 1.4
 [sub_resource type="GDScript" id="GDScript_1bvp3"]
 resource_name = "gun_hand"
 script/source = "extends Sprite2D
+@export var hand_animated: Sprite2D
 @export var muzzle_flash: Light2D
 @export var bullet_trace: Line2D
 var fade_timer: float
@@ -218,6 +119,7 @@ func _process(delta):
 		fade_timer -= delta
 	else:
 		hide()
+		hand_animated.show()
 		set_process(false)
 
 
@@ -227,6 +129,7 @@ func _input(event):
 	set_process(true)
 	fade_timer = 2.0
 	shot_timer = 0.02
+	hand_animated.hide()
 	show()
 	bullet_trace.show()
 	muzzle_flash.show()
@@ -245,40 +148,353 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
+[sub_resource type="Animation" id="Animation_w48qg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/BodySprite/GunHandAnimated:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_272bh")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprites/BodySprite/GunHandAnimated:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-5, 3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.5707964]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.7, 0.7)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:skew")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.5235988]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprites/BodySprite:texture")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_7mycd")]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprites/BodySprite:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Sprites/BodySprite/GunHandAnimated:texture")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_272bh")]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sprites/BodySprite/GunHandAnimated:frame")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_1bvp3"]
 resource_name = "idle"
+length = 1.5
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-5, 3), Vector2(-5, 2), Vector2(-4, 2), Vector2(-4, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:skew")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprites/BodySprite:texture")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_7mycd")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprites/BodySprite:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprites/BodySprite/GunHandAnimated:texture")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_272bh")]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprites/BodySprite/GunHandAnimated:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_vivmo"]
+resource_name = "run"
+length = 0.50000834
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/BodySprite/GunHandAnimated:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_4c57u")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprites/BodySprite/GunHandAnimated:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.08333334, 0.16666669, 0.25, 0.33333337, 0.4166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-11, -16.5), Vector2(-7, -6.000001), Vector2(-3, 1.999999), Vector2(2, -6.500001), Vector2(-6.999999, -3.5000014), Vector2(-10.999999, -8.500002)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1.5707964, 0.7853982, 0.0, -2.3561945, 0.5235988, 1.134464]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0.7, 0.4), Vector2(0.8, 0.5), Vector2(1, 0.8), Vector2(1, 1), Vector2(1, 1), Vector2(0.85, 0.7)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprites/BodySprite/GunHandAnimated/Gun:skew")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0.0, -0.5235988]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprites/BodySprite:texture")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_efxa6")]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprites/BodySprite:frame")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lquwl"]
 _data = {
-&"idle": SubResource("Animation_1bvp3")
+&"RESET": SubResource("Animation_w48qg"),
+&"idle": SubResource("Animation_1bvp3"),
+&"run": SubResource("Animation_vivmo")
 }
 
 [node name="Main" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite", "gun_hand")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("anim_player", "sprites")]
 position = Vector2(208, 236)
 motion_mode = 1
 script = SubResource("GDScript_ig7tw")
-sprite = NodePath("AnimatedSprite2D")
-gun_hand = NodePath("GunHand")
+anim_player = NodePath("AnimationPlayer")
+sprites = NodePath("Sprites")
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-texture_filter = 1
-scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_kek77")
-animation = &"idle"
-frame_progress = 0.36735296
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
-
-[node name="PointLight2D DARK" type="PointLight2D" parent="CharacterBody2D"]
+[node name="PointLight2D Vignette" type="PointLight2D" parent="CharacterBody2D"]
 blend_mode = 2
 texture = SubResource("GradientTexture2D_lquwl")
-
-[node name="PointLight2D" type="PointLight2D" parent="CharacterBody2D"]
-visible = false
-texture = SubResource("GradientTexture2D_1bvp3")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 material = SubResource("ShaderMaterial_lquwl")
@@ -303,19 +519,27 @@ offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GunHand" type="Sprite2D" parent="CharacterBody2D" node_paths=PackedStringArray("muzzle_flash", "bullet_trace")]
+[node name="Sprites" type="Node2D" parent="CharacterBody2D"]
+
+[node name="BodySprite" type="Sprite2D" parent="CharacterBody2D/Sprites"]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_7mycd")
+hframes = 6
+
+[node name="GunHandAiming" type="Sprite2D" parent="CharacterBody2D/Sprites/BodySprite" node_paths=PackedStringArray("hand_animated", "muzzle_flash", "bullet_trace")]
 visible = false
 z_index = 1
 texture_filter = 1
-position = Vector2(-5, -20)
-scale = Vector2(2, 2)
-texture = ExtResource("3_1bvp3")
-offset = Vector2(-1.5, 9.5)
+position = Vector2(-2.5, -9)
+texture = ExtResource("4_kek77")
+offset = Vector2(-1.5, 7)
 script = SubResource("GDScript_1bvp3")
+hand_animated = NodePath("../GunHandAnimated")
 muzzle_flash = NodePath("MuzzleFlash")
 bullet_trace = NodePath("BulletTrace")
 
-[node name="BulletTrace" type="Line2D" parent="CharacterBody2D/GunHand"]
+[node name="BulletTrace" type="Line2D" parent="CharacterBody2D/Sprites/BodySprite/GunHandAiming"]
 visible = false
 z_index = -1
 position = Vector2(-0.5, 20)
@@ -323,25 +547,46 @@ points = PackedVector2Array(0, 0, 0, 200)
 width = 0.5
 default_color = Color(1, 1, 1, 0.2509804)
 
-[node name="MuzzleFlash" type="PointLight2D" parent="CharacterBody2D/GunHand"]
+[node name="MuzzleFlash" type="PointLight2D" parent="CharacterBody2D/Sprites/BodySprite/GunHandAiming"]
 visible = false
 position = Vector2(-0.5, 23)
 energy = 4.0
 texture = SubResource("GradientTexture2D_7mycd")
 
+[node name="Gun" type="Sprite2D" parent="CharacterBody2D/Sprites/BodySprite/GunHandAiming"]
+z_index = -1
+position = Vector2(-2.5, 14)
+texture = ExtResource("3_5vw27")
+offset = Vector2(0.5, 2)
+
+[node name="GunHandAnimated" type="Sprite2D" parent="CharacterBody2D/Sprites/BodySprite"]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("2_272bh")
+hframes = 6
+
+[node name="Gun" type="Sprite2D" parent="CharacterBody2D/Sprites/BodySprite/GunHandAnimated"]
+z_index = -1
+position = Vector2(-5, 3)
+rotation = 1.5707964
+scale = Vector2(0.7, 0.7)
+skew = -0.5235988
+texture = ExtResource("3_5vw27")
+offset = Vector2(0.5, 3)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
-root_node = NodePath("../AnimatedSprite2D")
 libraries = {
 &"": SubResource("AnimationLibrary_lquwl")
 }
+autoplay = "idle"
 
 [node name="bg" type="Sprite2D" parent="."]
 z_index = -1
 scale = Vector2(1.2, 1.2)
-texture = ExtResource("2_0xm2m")
+texture = ExtResource("7_272bh")
 
 [node name="bg super big" type="Sprite2D" parent="."]
 z_index = -2
-position = Vector2(-57.000004, -192)
+position = Vector2(-57.000004, -194)
 scale = Vector2(6, 6)
-texture = ExtResource("2_0xm2m")
+texture = ExtResource("7_272bh")

@@ -1,0 +1,40 @@
+{ "skeleton": { "images": "images/" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "legR", "bone": "root", "attachment": "legR" },
+	{ "name": "pelvis", "bone": "root", "attachment": "pelvis" },
+	{ "name": "legL", "bone": "root", "attachment": "legL" },
+	{ "name": "handR", "bone": "root", "attachment": "handR" },
+	{ "name": "chest", "bone": "root", "attachment": "chest" },
+	{ "name": "handL", "bone": "root", "attachment": "handL" },
+	{ "name": "head", "bone": "root", "attachment": "head" }
+],
+"skins": {
+	"default": {
+		"legR": {
+			"legR": { "x": 572, "y": -2194, "width": 838, "height": 1420 }
+		},
+		"pelvis": {
+			"pelvis": { "x": 1076.5, "y": -1703.5, "width": 817, "height": 1069 }
+		},
+		"legL": {
+			"legL": { "x": 904, "y": -2246, "width": 1170, "height": 1436 }
+		},
+		"handR": {
+			"handR": { "x": 607.5, "y": -904, "width": 1213, "height": 1784 }
+		},
+		"chest": {
+			"chest": { "x": 1274, "y": -1243.5, "width": 1272, "height": 737 }
+		},
+		"handL": {
+			"handL": { "x": 1444.5, "y": -1033.5, "width": 1003, "height": 1463 }
+		},
+		"head": {
+			"head": { "x": 1002, "y": -755, "width": 514, "height": 608 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
